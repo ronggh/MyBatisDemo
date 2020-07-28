@@ -2,14 +2,17 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- namespace:名称空间，任意，但一般指定为接口的全类名 -->
-<mapper namespace="EmployeeMapper">
+<!-- namespace:名称空间，指定为接口的全类名 -->
+<mapper namespace="dao.EmployeeMapper">
     <!--
     id：唯一标识
     resultType：返回值类型，类的全路径名
     #{id}：从传递过来的参数中取出id值
     相当于：
     public Employee getEmpById(Integer id);
+    如果字段名与实体类中的属性名不同,需要在查询语句中使用别名,如:
+    数据库中名为last_name, 实体类中的属性名为lastName
+    select id,last_name lastName ,email,gender from t_employee where id = #{id}
      -->
     <select id="getEmpById" resultType="entity.Employee">
 		select id,lastName,email,gender from t_employee where id = #{id}
