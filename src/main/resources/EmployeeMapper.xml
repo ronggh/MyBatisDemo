@@ -12,9 +12,39 @@
     public Employee getEmpById(Integer id);
     如果字段名与实体类中的属性名不同,需要在查询语句中使用别名,如:
     数据库中名为last_name, 实体类中的属性名为lastName
+    #{},代表实体类中的属性
     select id,last_name lastName ,email,gender from t_employee where id = #{id}
+    MyBatis查找时，先找指定databaseId的对应语句，如果没有，则使用不带标识的
      -->
+    <!-- 查询指定id的数据 -->
+    <!--public Employee getEmpById(int id);-->
     <select id="getEmpById" resultType="entity.Employee">
 		select id,lastName,email,gender from t_employee where id = #{id}
 	</select>
+    <select id="getEmpById" resultType="entity.Employee" databaseId="mysql">
+		select id,lastName,email,gender from t_employee where id = #{id}
+	</select>
+    <select id="getEmpById" resultType="entity.Employee" databaseId="oracle">
+		select employee_id id,last_name lastName,email,gender from tbl_employee where employee_id = #{id}
+	</select>
+    <!-- 新增一条员工数据 -->
+    <!-- public void addEmployee(Employee employee); -->
+    <!--
+        parameterType:可以省略
+        useGeneratedKeys:true,使用自增主健获取值的方式
+        keyProperty:获取的主健值存到这个属性里
+     -->
+    <insert id="addEmployee" parameterType="entity.Employee" useGeneratedKeys="true" keyProperty="id">
+        insert into t_employee (lastName,gender,email) VALUES (#{lastName},#{gender},#{email})
+    </insert>
+    <!-- 更新一个员工-->
+    <!--public void updateEmployee(Employee employee);-->
+    <update id="updateEmployee">
+        update t_employee set lastName=#{lastName},gender=#{gender},email=#{email} where id=#{id}
+    </update>
+     <!--删除一个员工-->
+    <!--public void deleteEmployee(int id);-->
+    <delete id="deleteEmployee">
+        delete from t_employee where id=#{id}
+    </delete>
 </mapper>

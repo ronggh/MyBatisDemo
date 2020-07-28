@@ -1,5 +1,8 @@
 package entity;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("employee")
 public class Employee {
     private Integer id;
     private String lastName;
@@ -35,6 +38,17 @@ public class Employee {
     }
 
     public void setEmail(String email) {
+        this.email = email;
+    }
+
+    //
+    public Employee() {
+    }
+
+    public Employee(Integer id, String lastName, String gender, String email) {
+        this.id = id;
+        this.lastName = lastName;
+        this.gender = gender;
         this.email = email;
     }
 
