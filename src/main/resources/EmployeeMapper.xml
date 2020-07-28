@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:名称空间，任意，但一般指定为接口的全类名 -->
+<mapper namespace="EmployeeMapper">
+    <!--
+    id：唯一标识
+    resultType：返回值类型，类的全路径名
+    #{id}：从传递过来的参数中取出id值
+    相当于：
+    public Employee getEmpById(Integer id);
+     -->
+    <select id="getEmpById" resultType="entity.Employee">
+		select id,lastName,email,gender from t_employee where id = #{id}
+	</select>
+</mapper>
