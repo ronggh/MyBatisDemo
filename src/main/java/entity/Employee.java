@@ -9,6 +9,10 @@ public class Employee {
     private String gender;
     private String email;
 
+    // 再增加一个部门属性，来测试多表联合查询
+    private Dept dept;
+
+
     public Integer getId() {
         return id;
     }
@@ -39,6 +43,14 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Dept getDept() {
+        return dept;
+    }
+
+    public void setDept(Dept dept) {
+        this.dept = dept;
     }
 
     //

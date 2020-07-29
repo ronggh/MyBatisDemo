@@ -113,6 +113,8 @@
 						不重要，简单的Dao接口为了开发快速可以使用注解；
 		-->
         <mapper resource="EmployeeMapper.xml"/>
+        <mapper resource="EmployeeMapperPlus.xml"/>
+        <mapper resource="DeptMapper.xml"/>
         <!-- 基于注解的方式，不需要编写XML映射文件，语句通过注解写在接口的方法上 -->
         <mapper class="dao.EmployeeMapperAnnotation"/>
         <!-- 批量注册： -->
