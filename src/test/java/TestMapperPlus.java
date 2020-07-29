@@ -1,7 +1,10 @@
+import dao.DeptMapper;
 import dao.EmployeeMapper;
 
 import dao.EmployeeMapperPlus;
+import entity.Dept;
 import entity.Employee;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -10,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.util.Arrays;
 
 
 public class TestMapperPlus {
@@ -61,6 +64,7 @@ public class TestMapperPlus {
     // 3. 使用association进行分步查询
     @Test
     public void test3() throws Exception {
+        
         // 1、获取sqlSessionFactory对象
         SqlSessionFactory sqlSessionFactory = getSqlSessionFactory("mybatis_config2.xml");
         // 2、获取sqlSession对象
@@ -69,6 +73,63 @@ public class TestMapperPlus {
             // 3、获取接口的实现类对象
             EmployeeMapperPlus mapper = session.getMapper(EmployeeMapperPlus.class);
             Employee employee = mapper.getEmployeeByIdStep(1);
+            System.out.println(employee);
+            System.out.println(employee.getDept());
+        } finally {
+            session.close();
+        }
+    }
+
+    // 4. 查部门，并同时将部门下的员工也一并查出来
+    @Test
+    public void test4() throws Exception {
+
+        // 1、获取sqlSessionFactory对象
+        SqlSessionFactory sqlSessionFactory = getSqlSessionFactory("mybatis_config2.xml");
+        // 2、获取sqlSession对象
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+            // 3、获取接口的实现类对象
+            DeptMapper mapper = session.getMapper(DeptMapper.class);
+            Dept dept = mapper.getDeptWithEmployeeById(1);
+            System.out.println(dept);
+            System.out.println(dept.getEmployees());
+        } finally {
+            session.close();
+        }
+    }
+
+    // 5. 使用分步式查询：查部门，并同时将部门下的员工也一并查出来
+    @Test
+    public void test5() throws Exception {
+
+        // 1、获取sqlSessionFactory对象
+        SqlSessionFactory sqlSessionFactory = getSqlSessionFactory("mybatis_config2.xml");
+        // 2、获取sqlSession对象
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+            // 3、获取接口的实现类对象
+            DeptMapper mapper = session.getMapper(DeptMapper.class);
+            Dept dept = mapper.getDeptWithEmployeeByIdStep(1);
+            System.out.println(dept);
+            System.out.println(dept.getEmployees());
+        } finally {
+            session.close();
+        }
+    }
+
+    // 5. 使用鉴别器
+    @Test
+    public void test6() throws Exception {
+
+        // 1、获取sqlSessionFactory对象
+        SqlSessionFactory sqlSessionFactory = getSqlSessionFactory("mybatis_config2.xml");
+        // 2、获取sqlSession对象
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+            // 3、获取接口的实现类对象
+            EmployeeMapperPlus mapper = session.getMapper(EmployeeMapperPlus.class);
+            Employee employee = mapper.getEmployeeById2(3);
             System.out.println(employee);
             System.out.println(employee.getDept());
         } finally {

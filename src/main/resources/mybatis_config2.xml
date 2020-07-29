@@ -18,6 +18,9 @@
 	 -->
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 懒加载 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
     </settings>
 
 

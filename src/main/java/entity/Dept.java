@@ -1,8 +1,13 @@
 package entity;
 
+import java.util.List;
+
 public class Dept {
     private int id;
     private String deptName;
+
+    // 部门下有很多员工
+    private List<Employee> employees;
 
     public int getId() {
         return id;
@@ -20,6 +25,13 @@ public class Dept {
         this.deptName = deptName;
     }
 
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
 
     @Override
     public String toString() {

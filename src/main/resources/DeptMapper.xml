@@ -8,4 +8,63 @@
     <select id="getDeptById" resultType="entity.Dept">
         select id, dept_name deptName from t_dept where id = #{id}
     </select>
+
+    <!-- 查部门，并同时将部门下的员工也一并查出来 -->
+    <!-- 员工是个List集合 -->
+    <!--
+	public class Department {
+			private Integer id;
+			private String departmentName;
+			private List<Employee> employees;
+	  did  dept_name  ||  eid  last_name  email   gender
+	 -->
+
+    <!--嵌套结果集的方式，使用collection标签定义关联的集合类型的属性封装规则  -->
+    <resultMap id="MyDept" type="entity.Dept">
+        <id column="id" property="id"/>
+        <result column="deptName" property="deptName"/>
+        <!-- 映射员工信息的集合 -->
+        <!--
+			collection定义关联集合类型的属性的封装规则
+			ofType:指定集合里面元素的类型
+		-->
+        <collection property="employees" ofType="entity.Employee">
+            <!-- 定义这个集合中元素的封装规则 -->
+            <id column="eid" property="id" />
+            <result column="lastName" property="lastName"/>
+            <result column="gender" property="gender"/>
+            <result column="email" property="email"/>
+
+        </collection>
+
+    </resultMap>
+    <!--public Dept getDeptWithEmployeeById(int id);-->
+    <select id="getDeptWithEmployeeById" resultMap="MyDept">
+      SELECT d.id id, d.dept_name deptName, e.id eId,e.lastName lastName,e.gender gender,e.email email
+      FROM t_dept d LEFT JOIN t_employee e ON d.id = e.dept_id WHERE d.id = #{id}
+    </select>
+    
+    <!-- 分步式查询：-->
+    <!--// 使用分步查询实现：查部门，并同时将部门下的员工也一并查出来-->
+    <!--public Dept getDeptWithEmployeeByIdStep(int id);-->
+    <resultMap id="MyDeptStep" type="entity.Dept">
+        <id column="id " property="id"/>
+        <result column="dept_name" property="deptName"/>
+        <!-- 映射员工信息 -->
+        <collection property="employees" select="dao.EmployeeMapperPlus.getEmployeeListByDeptId" column="id">
+
+        </collection>
+    </resultMap>
+    <select id="getDeptWithEmployeeByIdStep" resultMap="MyDeptStep">
+        select id, dept_name from t_dept where id = #{id}
+    </select>
+
+    <!-- 扩展：多列的值传递过去：
+			将多列的值封装map传递；
+			column="{key1=column1,key2=column2}"
+		fetchType="lazy"：表示使用延迟加载；
+				- lazy：延迟
+				- eager：立即
+	 -->
+
 </mapper>
