@@ -118,7 +118,7 @@ public class TestMapperPlus {
         }
     }
 
-    // 5. 使用鉴别器
+    // 6. 使用鉴别器
     @Test
     public void test6() throws Exception {
 
@@ -136,7 +136,5 @@ public class TestMapperPlus {
             session.close();
         }
     }
-
-
 
 }
