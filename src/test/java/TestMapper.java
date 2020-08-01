@@ -1,6 +1,6 @@
-import dao.EmployeeMapper;
-import dao.EmployeeMapperAnnotation;
-import entity.Employee;
+import cn.alan.mapper.EmployeeMapper;
+import cn.alan.mapper.EmployeeMapperAnnotation;
+import cn.alan.entity.Employee;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;

@@ -21,6 +21,8 @@
         <!-- 懒加载 -->
         <setting name="lazyLoadingEnabled" value="true"/>
         <setting name="aggressiveLazyLoading" value="false"/>
+        <!-- 显示开启缓存，默认是已开启的 -->
+        <setting name="cacheEnabled" value="true"/>
     </settings>
 
 
@@ -117,9 +119,10 @@
 		-->
         <mapper resource="EmployeeMapper.xml"/>
         <mapper resource="EmployeeMapperPlus.xml"/>
+        <mapper resource="EmployeeMapperDynamicSQL.xml"/>
         <mapper resource="DeptMapper.xml"/>
         <!-- 基于注解的方式，不需要编写XML映射文件，语句通过注解写在接口的方法上 -->
-        <mapper class="dao.EmployeeMapperAnnotation"/>
+        <mapper class="cn.alan.mapper.EmployeeMapperAnnotation"/>
         <!-- 批量注册： -->
         <package name="com.alan.dao"/>
     </mappers>

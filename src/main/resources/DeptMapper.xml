@@ -3,9 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace:名称空间，指定为接口的全类名 -->
-<mapper namespace="dao.DeptMapper">
+<mapper namespace="cn.alan.mapper.DeptMapper">
+
     <!--public Dept getDeptById(int id)-->
-    <select id="getDeptById" resultType="entity.Dept">
+    <select id="getDeptById" resultType="cn.alan.entity.Dept">
         select id, dept_name deptName from t_dept where id = #{id}
     </select>
 
@@ -20,7 +21,7 @@
 	 -->
 
     <!--嵌套结果集的方式，使用collection标签定义关联的集合类型的属性封装规则  -->
-    <resultMap id="MyDept" type="entity.Dept">
+    <resultMap id="MyDept" type="cn.alan.entity.Dept">
         <id column="id" property="id"/>
         <result column="deptName" property="deptName"/>
         <!-- 映射员工信息的集合 -->
@@ -28,7 +29,7 @@
 			collection定义关联集合类型的属性的封装规则
 			ofType:指定集合里面元素的类型
 		-->
-        <collection property="employees" ofType="entity.Employee">
+        <collection property="employees" ofType="cn.alan.entity.Employee">
             <!-- 定义这个集合中元素的封装规则 -->
             <id column="eid" property="id" />
             <result column="lastName" property="lastName"/>
@@ -47,11 +48,11 @@
     <!-- 分步式查询：-->
     <!--// 使用分步查询实现：查部门，并同时将部门下的员工也一并查出来-->
     <!--public Dept getDeptWithEmployeeByIdStep(int id);-->
-    <resultMap id="MyDeptStep" type="entity.Dept">
-        <id column="id " property="id"/>
+    <resultMap id="MyDeptStep" type="cn.alan.entity.Dept">
+        <id column="id" property="id"/>
         <result column="dept_name" property="deptName"/>
         <!-- 映射员工信息 -->
-        <collection property="employees" select="dao.EmployeeMapperPlus.getEmployeeListByDeptId" column="id">
+        <collection property="employees" select="cn.alan.mapper.EmployeeMapperPlus.getEmployeeListByDeptId" column="id">
 
         </collection>
     </resultMap>

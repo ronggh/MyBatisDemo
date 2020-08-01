@@ -1,6 +1,6 @@
-package dao;
+package cn.alan.mapper;
 
-import entity.Employee;
+import cn.alan.entity.Employee;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 

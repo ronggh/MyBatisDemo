@@ -1,6 +1,6 @@
-package dao;
+package cn.alan.mapper;
 
-import entity.Dept;
+import cn.alan.entity.Dept;
 
 public interface DeptMapper {
     //

@@ -1,8 +1,11 @@
-package entity;
+package cn.alan.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Dept {
+// 实现序列化接口，以便MyBatis使用
+public class Dept implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int id;
     private String deptName;
 
@@ -31,6 +34,13 @@ public class Dept {
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public Dept() {
+    }
+
+    public Dept(int id) {
+        this.id = id;
     }
 
     @Override

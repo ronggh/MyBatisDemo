@@ -1,10 +1,8 @@
-import dao.DeptMapper;
-import dao.EmployeeMapper;
+import cn.alan.mapper.DeptMapper;
 
-import dao.EmployeeMapperPlus;
-import entity.Dept;
-import entity.Employee;
-import org.apache.ibatis.annotations.Mapper;
+import cn.alan.mapper.EmployeeMapperPlus;
+import cn.alan.entity.Dept;
+import cn.alan.entity.Employee;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -13,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 
 public class TestMapperPlus {
@@ -102,7 +99,6 @@ public class TestMapperPlus {
     // 5. 使用分步式查询：查部门，并同时将部门下的员工也一并查出来
     @Test
     public void test5() throws Exception {
-
         // 1、获取sqlSessionFactory对象
         SqlSessionFactory sqlSessionFactory = getSqlSessionFactory("mybatis_config2.xml");
         // 2、获取sqlSession对象
@@ -110,7 +106,7 @@ public class TestMapperPlus {
         try {
             // 3、获取接口的实现类对象
             DeptMapper mapper = session.getMapper(DeptMapper.class);
-            Dept dept = mapper.getDeptWithEmployeeByIdStep(1);
+            Dept dept = mapper.getDeptWithEmployeeByIdStep(2);
             System.out.println(dept);
             System.out.println(dept.getEmployees());
         } finally {
@@ -121,7 +117,6 @@ public class TestMapperPlus {
     // 6. 使用鉴别器
     @Test
     public void test6() throws Exception {
-
         // 1、获取sqlSessionFactory对象
         SqlSessionFactory sqlSessionFactory = getSqlSessionFactory("mybatis_config2.xml");
         // 2、获取sqlSession对象

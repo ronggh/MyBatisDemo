@@ -1,9 +1,12 @@
-package entity;
+package cn.alan.entity;
 
 import org.apache.ibatis.type.Alias;
 
+import java.io.Serializable;
+
 @Alias("employee")
-public class Employee {
+public class Employee implements Serializable {
+    private static final long serialVersionUID = 1L;
     private Integer id;
     private String lastName;
     private String gender;
@@ -62,6 +65,15 @@ public class Employee {
         this.lastName = lastName;
         this.gender = gender;
         this.email = email;
+    }
+
+
+    public Employee(Integer id, String lastName, String gender, String email, Dept dept) {
+        this.id = id;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.dept = dept;
     }
 
     @Override

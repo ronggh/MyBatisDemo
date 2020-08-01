@@ -3,7 +3,34 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace:名称空间，指定为接口的全类名 -->
-<mapper namespace="dao.EmployeeMapper">
+<mapper namespace="cn.alan.mapper.EmployeeMapper">
+    <!-- 开启二级缓存，即namespace级别的缓存 -->
+    <!--
+    eviction:缓存的回收策略：
+        • LRU – 最近最少使用的：移除最长时间不被使用的对象。
+        • FIFO – 先进先出：按对象进入缓存的顺序来移除它们。
+        • SOFT – 软引用：移除基于垃圾回收器状态和软引用规则的对象。
+        • WEAK – 弱引用：更积极地移除基于垃圾收集器状态和弱引用规则的对象。
+        • 默认的是 LRU。
+    flushInterval：缓存刷新间隔
+        缓存多长时间清空一次，默认不清空，设置一个毫秒值
+    readOnly:是否只读：
+        true：只读；mybatis认为所有从缓存中获取数据的操作都是只读操作，不会修改数据。
+                 mybatis为了加快获取速度，直接就会将数据在缓存中的引用交给用户。不安全，速度快
+        false：非只读：mybatis觉得获取的数据可能会被修改。
+                mybatis会利用序列化&反序列的技术克隆一份新的数据给你。安全，速度慢
+    size：缓存存放多少元素；
+    type=""：指定自定义缓存的全类名；
+            实现Cache接口即可；
+    -->
+    <!-- MyBatis自带的缓存 -->
+    <!--<cache eviction="FIFO" flushInterval="60000" readOnly="false" size="1024"></cache>-->
+    <!--<cache></cache>-->
+
+    <!-- 整合MyBatis和第三方ehcache -->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"></cache>
+
+
     <!--
     id：唯一标识
     resultType：返回值类型，类的全路径名
@@ -18,13 +45,13 @@
      -->
     <!-- 查询指定id的数据 -->
     <!--public Employee getEmpById(int id);-->
-    <select id="getEmpById" resultType="entity.Employee">
+    <select id="getEmpById" resultType="cn.alan.entity.Employee">
 		select id,lastName,email,gender from t_employee where id = #{id}
 	</select>
-    <select id="getEmpById" resultType="entity.Employee" databaseId="mysql">
+    <select id="getEmpById" resultType="cn.alan.entity.Employee" databaseId="mysql">
 		select id,lastName,email,gender from t_employee where id = #{id}
 	</select>
-    <select id="getEmpById" resultType="entity.Employee" databaseId="oracle">
+    <select id="getEmpById" resultType="cn.alan.entity.Employee" databaseId="oracle">
 		select employee_id id,last_name lastName,email,gender from tbl_employee where employee_id = #{id}
 	</select>
     <!-- 新增一条员工数据 -->
@@ -34,7 +61,7 @@
         useGeneratedKeys:true,使用自增主健获取值的方式
         keyProperty:获取的主健值存到这个属性里
      -->
-    <insert id="addEmployee" parameterType="entity.Employee" useGeneratedKeys="true" keyProperty="id">
+    <insert id="addEmployee" parameterType="cn.alan.entity.Employee" useGeneratedKeys="true" keyProperty="id">
         insert into t_employee (lastName,gender,email) VALUES (#{lastName},#{gender},#{email})
     </insert>
     <!--
@@ -89,25 +116,25 @@
         参数按param1,param2,....来传递，
     -->
     <!--public Employee getEmployeeByIdAndLastName(int id, String lastName);-->
-    <select id="getEmployeeByIdAndLastName" resultType="entity.Employee">
+    <select id="getEmployeeByIdAndLastName" resultType="cn.alan.entity.Employee">
         select id,lastName,email,gender from t_employee where id = #{param1} and lastName=#{param2}
     </select>
     <!-- 使用命名参数的方式 -->
     <!--public Employee getEmployeeByIdAndLastName2(@Param("id") int id, @Param("lastName") String lastName)-->
-    <select id="getEmployeeByIdAndLastName2" resultType="entity.Employee">
+    <select id="getEmployeeByIdAndLastName2" resultType="cn.alan.entity.Employee">
         select id,lastName,email,gender from t_employee where id = #{id} and lastName=#{lastName}
     </select>
 
     <!--// 查询，多个参数，使用Map传递-->
     <!--public Employee getEmployeeByMap(Map<String,Object> map);-->
-    <select id="getEmployeeByMap" resultType="entity.Employee">
+    <select id="getEmployeeByMap" resultType="cn.alan.entity.Employee">
         select id,lastName,email,gender from t_employee where id = #{id} and lastName=#{lastName}
     </select>
 
     <!-- 查询结果返回List -->
     <!--resultType：如果返回的是一个集合，要写集合中元素的类型  -->
     <!--public List<Employee> getByLastNameLike(String lastName)-->
-    <select id="getByLastNameLike" resultType="entity.Employee">
+    <select id="getByLastNameLike" resultType="cn.alan.entity.Employee">
         select id,lastName,email,gender from t_employee where lastName like #{lastName}
     </select>
     <!--// 查询单条记录，返回Map类型-->
@@ -119,7 +146,7 @@
     <!--// 查询多条记录，返回Map类型，key为记录的主健值，value为Employee对象-->
     <!--public Map<Integer,Employee> getEmployeeByLastNameLikeReturnMap(String lastName);-->
     <!-- resultType: 为Map中数据的类型，即Employee -->
-    <select id="getEmployeeByLastNameLikeReturnMap" resultType="entity.Employee">
+    <select id="getEmployeeByLastNameLikeReturnMap" resultType="cn.alan.entity.Employee">
         select id,lastName,email,gender from t_employee where lastName like #{lastName}
     </select>
 </mapper>
