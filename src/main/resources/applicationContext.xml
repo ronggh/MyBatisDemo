@@ -56,8 +56,5 @@
     base-package：指定mapper接口的包名
      -->
     <mybatis-spring:scan base-package="cn.alan.mapper"/>
-    <!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="mapper"></property>
-    </bean> -->
 
 </beans>

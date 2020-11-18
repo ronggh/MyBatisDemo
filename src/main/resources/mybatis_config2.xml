@@ -121,6 +121,7 @@
         <mapper resource="EmployeeMapperPlus.xml"/>
         <mapper resource="EmployeeMapperDynamicSQL.xml"/>
         <mapper resource="DeptMapper.xml"/>
+        <mapper resource="MyNodeMapper.xml"/>
         <!-- 基于注解的方式，不需要编写XML映射文件，语句通过注解写在接口的方法上 -->
         <mapper class="cn.alan.mapper.EmployeeMapperAnnotation"/>
         <!-- 批量注册： -->
